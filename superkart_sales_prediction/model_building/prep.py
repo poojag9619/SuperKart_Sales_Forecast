@@ -17,7 +17,7 @@ df = pd.read_csv(DATASET_PATH)
 print("Dataset loaded successfully.")
 
 # Drop unique identifier column (not useful for modeling)
-df.drop(columns=['Product_Id', 'Store_Id'], inplace=True)
+df.drop(columns=['Product_Id', 'Store_Id'], errors='ignore', inplace=True)
 
 # Encode categorical columns
 label_encoder = LabelEncoder()
