@@ -18,8 +18,13 @@ api = HfApi(token=HF_TOKEN)
 
 DATASET_PATH = "hf://datasets/poojag007/superkart-sale-prediction/SuperKart.csv"
 # ---- LOAD DATA ----
-df = pd.read_csv(DATASET_PATH)
-print("Dataset loaded successfully.")
+try:
+    df = pd.read_csv(DATASET_PATH)
+    print("Dataset loaded successfully.")
+    print(f"Shape: {df.shape}")
+except Exception as e:
+    print(f"Failed to load dataset: {e}")
+    raise
 
 # Drop unique identifier column (not useful for modeling)
 df.drop(columns=['Product_Id', 'Store_Id'], errors='ignore', inplace=True)
