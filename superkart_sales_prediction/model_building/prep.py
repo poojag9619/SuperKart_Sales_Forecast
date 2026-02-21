@@ -13,7 +13,7 @@ from huggingface_hub import login, HfApi
 # Define constants for the dataset and output paths
 api = HfApi(token=os.getenv("HF_TOKEN"))
 DATASET_PATH = "hf://datasets/poojag007/superkart-sale-prediction/SuperKart.csv"
-bank_dataset = pd.read_csv(DATASET_PATH)
+df = pd.read_csv(DATASET_PATH)
 print("Dataset loaded successfully.")
 
 # Drop unique identifier column (not useful for modeling)
