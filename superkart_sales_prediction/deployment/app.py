@@ -48,7 +48,7 @@ with col2:
 with col3:
     st.subheader("📊 Forecast Period")
     forecast_period = st.selectbox("Forecast Granularity", ["Weekly", "Monthly", "Quarterly", "Annual"])
-    multiplier = {{"Weekly": 1, "Monthly": 4.33, "Quarterly": 13, "Annual": 52}}[forecast_period]
+    multiplier = {"Weekly": 1, "Monthly": 4.33, "Quarterly": 13, "Annual": 52}[forecast_period]
     st.info(f"Weekly prediction × {{multiplier}} = {{forecast_period}} forecast")
 
 st.divider()
