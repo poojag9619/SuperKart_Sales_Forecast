@@ -49,17 +49,17 @@ with col3:
     st.subheader("📊 Forecast Period")
     forecast_period = st.selectbox("Forecast Granularity", ["Weekly", "Monthly", "Quarterly", "Annual"])
     multiplier = {"Weekly": 1, "Monthly": 4.33, "Quarterly": 13, "Annual": 52}[forecast_period]
-    st.info(f"Weekly prediction × {{multiplier}} = {{forecast_period}} forecast")
+    st.info(f"Weekly prediction × {multiplier} = {forecast_period} forecast")
 
 st.divider()
 
 if st.button("🔮 Predict Sales", use_container_width=True, type="primary"):
-    raw_input = {{
+    raw_input = {
         "Product_Weight": product_weight, "Product_Sugar_Content": sugar_content,
         "Product_Allocated_Area": allocated_area, "Product_Type": product_type,
         "Product_MRP": product_mrp, "Store_Size": store_size,
         "Store_Location_City_Type": city_type, "Store_Type": store_type, "Store_Age": store_age,
-    }}
+    }
     for col in ["Product_Sugar_Content", "Product_Type", "Store_Size", "Store_Location_City_Type", "Store_Type"]:
         le  = encoders[col]
         val = raw_input[col]
@@ -70,13 +70,13 @@ if st.button("🔮 Predict Sales", use_container_width=True, type="primary"):
     forecast     = weekly_sales * multiplier
 
     r1, r2, r3 = st.columns(3)
-    r1.metric("Weekly Sales",             f"₹ {{weekly_sales:,.2f}}")
-    r2.metric(f"{{forecast_period}} Sales", f"₹ {{forecast:,.2f}}")
-    r3.metric("Annual Sales",             f"₹ {{weekly_sales * 52:,.2f}}")
-    st.success(f"✅ Predicted {{forecast_period}} Sales: ₹ {{forecast:,.2f}}")
+    r1.metric("Weekly Sales",             f"$ {weekly_sales:,.2f}")
+    r2.metric(f"{forecast_period} Sales", f"$ {forecast:,.2f}")
+    r3.metric("Annual Sales",             f"$ {weekly_sales * 52:,.2f}")
+    st.success(f"✅ Predicted {forecast_period} Sales: $ {forecast:,.2f}")
 
     with st.expander("📋 Input Summary"):
-        st.dataframe(pd.DataFrame([raw_input]).T.rename(columns={{0: "Value"}}))
+        st.dataframe(pd.DataFrame([raw_input]).T.rename(columns={0: "Value"}))
 
 st.divider()
 st.caption("SuperKart MLOps Pipeline · Powered by XGBoost + Hugging Face + Streamlit")
