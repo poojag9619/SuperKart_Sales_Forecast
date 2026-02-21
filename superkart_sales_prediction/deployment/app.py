@@ -58,7 +58,7 @@ if st.button("🔮 Predict Sales", use_container_width=True, type="primary"):
         "Product_Weight": product_weight, "Product_Sugar_Content": sugar_content,
         "Product_Allocated_Area": allocated_area, "Product_Type": product_type,
         "Product_MRP": product_mrp, "Store_Size": store_size,
-        "Store_Location_City_Type": city_type, "Store_Type": store_type, "Store_Age": store_age,
+        "Store_Location_City_Type": city_type, "Store_Type": store_type, "Store_Age": store_age
     }
     for col in ["Product_Sugar_Content", "Product_Type", "Store_Size", "Store_Location_City_Type", "Store_Type"]:
         le  = encoders[col]
