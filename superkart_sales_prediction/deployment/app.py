@@ -54,29 +54,40 @@ with col3:
 st.divider()
 
 if st.button("🔮 Predict Sales", use_container_width=True, type="primary"):
-    raw_input = {
-        "Product_Weight": product_weight, "Product_Sugar_Content": sugar_content,
-        "Product_Allocated_Area": allocated_area, "Product_Type": product_type,
-        "Product_MRP": product_mrp, "Store_Size": store_size,
-        "Store_Location_City_Type": city_type, "Store_Type": store_type, "Store_Age": store_age
-    }
-    for col in ["Product_Sugar_Content", "Product_Type", "Store_Size", "Store_Location_City_Type", "Store_Type"]:
-        le  = encoders[col]
-        val = raw_input[col]
-        raw_input[col] = int(le.transform([val])[0]) if val in le.classes_ else 0
+    sugar_map   = {"Low Sugar": 0, "No Sugar": 1, "Regular": 2}
+    type_map    = {"Baking Goods": 0, "Breads": 1, "Breakfast": 2, "Canned": 3,
+                   "Dairy": 4, "Frozen Foods": 5, "Fruits and Vegetables": 6,
+                   "Hard Drinks": 7, "Health and Hygiene": 8, "Household": 9,
+                   "Meat": 10, "Others": 11, "Seafood": 12, "Snack Foods": 13,
+                   "Soft Drinks": 14, "Starchy Foods": 15}
+    size_map    = {"High": 0, "Medium": 1, "Small": 2}
+    city_map    = {"Tier 1": 0, "Tier 2": 1, "Tier 3": 2}
+    store_map   = {"Departmental Store": 0, "Food Mart": 1,
+                   "Supermarket Type1": 2, "Supermarket Type2": 3}
 
-    input_df     = pd.DataFrame([raw_input])[feature_names]
+    input_df = pd.DataFrame([{
+        "Product_Weight":             product_weight,
+        "Product_Sugar_Content":      sugar_map[sugar_content],
+        "Product_Allocated_Area":     allocated_area,
+        "Product_Type":               type_map[product_type],
+        "Product_MRP":                product_mrp,
+        "Store_Age":                  store_age,
+        "Store_Size":                 size_map[store_size],
+        "Store_Location_City_Type":   city_map[city_type],
+        "Store_Type":                 store_map[store_type],
+    }])
+
     weekly_sales = float(model.predict(input_df)[0])
     forecast     = weekly_sales * multiplier
 
     r1, r2, r3 = st.columns(3)
-    r1.metric("Weekly Sales",             f"$ {weekly_sales:,.2f}")
-    r2.metric(f"{forecast_period} Sales", f"$ {forecast:,.2f}")
-    r3.metric("Annual Sales",             f"$ {weekly_sales * 52:,.2f}")
-    st.success(f"✅ Predicted {forecast_period} Sales: $ {forecast:,.2f}")
+    r1.metric("Weekly Sales",             f"₹ {weekly_sales:,.2f}")
+    r2.metric(f"{forecast_period} Sales", f"₹ {forecast:,.2f}")
+    r3.metric("Annual Sales",             f"₹ {weekly_sales * 52:,.2f}")
+    st.success(f"✅ Predicted {forecast_period} Sales: ₹ {forecast:,.2f}")
 
     with st.expander("📋 Input Summary"):
-        st.dataframe(pd.DataFrame([raw_input]).T.rename(columns={0: "Value"}))
+        st.dataframe(input_df.T.rename(columns={0: "Value"}))
 
 st.divider()
 st.caption("SuperKart MLOps Pipeline · Powered by XGBoost + Hugging Face + Streamlit")
