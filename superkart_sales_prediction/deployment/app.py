@@ -81,9 +81,9 @@ if st.button("🔮 Predict Sales", use_container_width=True, type="primary"):
     forecast     = weekly_sales * multiplier
 
     r1, r2, r3 = st.columns(3)
-    r1.metric("Weekly Sales",             f"₹ {weekly_sales:,.2f}")
-    r2.metric(f"{forecast_period} Sales", f"₹ {forecast:,.2f}")
-    r3.metric("Annual Sales",             f"₹ {weekly_sales * 52:,.2f}")
+    r1.metric("Weekly Sales",             f"$ {weekly_sales:,.2f}")
+    r2.metric(f"{forecast_period} Sales", f"$ {forecast:,.2f}")
+    r3.metric("Annual Sales",             f"$ {weekly_sales * 52:,.2f}")
     st.success(f"✅ Predicted {forecast_period} Sales: ₹ {forecast:,.2f}")
 
     with st.expander("📋 Input Summary"):
